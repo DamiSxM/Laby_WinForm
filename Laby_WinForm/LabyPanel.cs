@@ -36,6 +36,16 @@ namespace Laby_Affichage
             OnPositionChanged(x, y); // Event PositionChanged
         }
 
+        public void LabyUpdate()
+        {
+            _labyrinthe.generateLaby();
+        }
+
+
+        public int[] PersoGetPosition()
+        {
+            return new int[2] { _labyrinthe.X, _labyrinthe.Y };
+        }
         public void PersoMove(Direction d)
         {
             switch (d)
@@ -67,6 +77,10 @@ namespace Laby_Affichage
             _player.Stop();
         }
 
+        public bool PlayerExists(string ip)
+        {
+            return _labyrinthe.containsPlayer(ip);
+        }
         public void PlayerAdd(string ip, int x, int y)
         {
             _labyrinthe.addPlayer(ip, x, y);

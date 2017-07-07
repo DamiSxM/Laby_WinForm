@@ -61,6 +61,11 @@ namespace Laby_Affichage
 
             Warfog(0);
 
+            generateLaby();
+        }
+
+        public void generateLaby()
+        {
             using (Graphics g = Graphics.FromImage(_labyBase))
             {
                 for (int x = 0; x < _tailleMaze - 1; x++)
@@ -111,10 +116,14 @@ namespace Laby_Affichage
             }
         }
 
+        public bool containsPlayer(string ip)
+        {
+            return _players.ContainsKey(ip);
+        }
         public void addPlayer(string ip, int x, int y)
         {
             Point p = new Point(x, y);
-            if (!_players.ContainsValue(ip)) _players.Add(ip, p);
+            if (!_players.ContainsKey(ip)) _players.Add(ip, p);
             createBitMapPlayers();
             RePaint();
         }
@@ -141,8 +150,8 @@ namespace Laby_Affichage
                 foreach (DictionaryEntry entry in _players)
                 {
                     p = (Point)entry.Value;
-                    p.X = (p.X - 1) * _tailleTiles;
-                    p.Y = (p.Y - 1) * _tailleTiles;
+                    p.X = p.X * _tailleTiles;
+                    p.Y = p.Y * _tailleTiles;
                     Bitmap tmp = new Bitmap(Properties.Resources.Combattante_Rose_Bas_1);
                     g.DrawImage(tmp, p);
                 }
