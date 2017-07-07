@@ -1,0 +1,607 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2C0ED9C-DCCC-499B-916C-B6FDC4CC2CA7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Laby_Affichage</RootNamespace>
+    <AssemblyName>Laby_WinForm</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Laby_Interfaces">
+      <HintPath>..\..\Laby_Interfaces\Laby_Interfaces\bin\Debug\Laby_Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LabyPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LabyPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PlayerPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Bas0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bas8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blanc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cielEtoiles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Bas_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Bas_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Bas_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Bas_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Droite_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Droite_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Droite_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Droite_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Gauche_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Gauche_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Gauche_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Gauche_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Haut_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Haut_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Haut_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combattante_Rose_Haut_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Droite8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\escalierPierre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gauche8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrilleFermee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrilleOuverte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Haut8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Bas_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Bas_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Bas_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Bas_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Droite_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Droite_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Droite_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Droite_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Gauche_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Gauche_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Gauche_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Gauche_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Haut_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Haut_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Haut_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mage_Bleu_Haut_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\murs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Bas_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Bas_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Bas_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Bas_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Droite_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Droite_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Droite_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Droite_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Gauche_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Gauche_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Gauche_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Gauche_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Haut_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Haut_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Haut_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Blonde_Haut_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Bas_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Bas_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Bas_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Bas_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Droite_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Droite_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Droite_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Droite_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Gauche_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Gauche_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Gauche_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Gauche_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Haut_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Haut_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Haut_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Noble_Vert_Haut_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\porte1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\porte2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\porte3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\porte4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PorteMagiqueBleu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\solGravier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\solSable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WAR_FOG_pour_form.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WAR_FOG_vide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_BAS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_C2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_C3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_C4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_C5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_C6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_D2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_D6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_droit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_DROITE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_E2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_E6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_F2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_F6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_G2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_G3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_G4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_G5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_G6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_GAUCHE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_HAUT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_C2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_C3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_C4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_C5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_C6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_D2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_D6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_E2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_E6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_F2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_F6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_G2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_G3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_G4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_G5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_mur_G6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_C2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_C3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_C4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_C5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_C6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_D2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_D6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_E2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_E6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_F2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_F6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_G2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_G3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_G4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_G5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_sol_G6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_vision_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_vision_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_vision_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_vision_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warfog_vision_5.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
