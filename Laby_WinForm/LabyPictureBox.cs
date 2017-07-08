@@ -35,8 +35,8 @@ namespace Laby_Affichage
         void OnPositionChanged(int x, int y) { if (PositionChanged != null) PositionChanged(x, y); }
 
         public int Velocity { get { return _velocity; } set { _velocity = value; } }
-        public int X { get { return _X; } set { moveToTile(value, _Y); } }
-        public int Y { get { return _Y; } set { moveToTile(_X, value); } }
+        public int X { get { return _X; } set { moveToTile(new Point(value, _Y)); } }
+        public int Y { get { return _Y; } set { moveToTile(new Point(_X, value)); } }
 
         public LabyPictureBox(int[,] maze, int tailleTiles, int cmbTuillesWidth, int cmbTuillesHeight) : base()
         {
@@ -82,17 +82,24 @@ namespace Laby_Affichage
             RePaint();
         }
 
-        public void addItem(int x, int y, string nom)
+
+        public void ItemsInit(Hashtable ht)
         {
-            Point p = new Point(x, y);
+            _items = ht;
+            createBitMapItems();
+            RePaint();
+        }
+
+        public void addItem(Point p, string nom)
+        {
             if (!_items.ContainsKey(p)) _items.Add(p, nom);
             createBitMapItems();
             RePaint();
         }
 
-        public void removeItem(int x, int y)
+        public void removeItem(Point p)
         {
-            _items.Remove(new Point(x, y));
+            _items.Remove(p);
             createBitMapItems();
             RePaint();
         }
@@ -120,9 +127,8 @@ namespace Laby_Affichage
         {
             return _players.ContainsKey(ip);
         }
-        public void addPlayer(string ip, int x, int y)
+        public void addPlayer(string ip, Point p)
         {
-            Point p = new Point(x, y);
             if (!_players.ContainsKey(ip)) _players.Add(ip, p);
             createBitMapPlayers();
             RePaint();
@@ -133,10 +139,10 @@ namespace Laby_Affichage
             createBitMapPlayers();
             RePaint();
         }
-        public void movePlayer(string ip, int x, int y)
+        public void movePlayer(string ip, Point p)
         {
             _players.Remove(ip);
-            _players.Add(ip, new Point(x, y));
+            _players.Add(ip, p);
             createBitMapPlayers();
             RePaint();
         }
@@ -158,19 +164,24 @@ namespace Laby_Affichage
             }
         }
 
+        delegate void RePaintCallback();
         public void RePaint()
         {
-            using (Graphics g = Graphics.FromImage(Image))
+            if (InvokeRequired) Invoke(new RePaintCallback(RePaint));
+            else
             {
-                affichageFond(g);
+                using (Graphics g = Graphics.FromImage(Image))
+                {
+                    affichageFond(g);
 
-                affichageBitmap(g, _labyBase);      // Laby
-                affichageBitmap(g, _labyItems);     // Items
-                affichageBitmap(g, _labyPlayers);   // Players
+                    affichageBitmap(g, _labyBase);      // Laby
+                    affichageBitmap(g, _labyItems);     // Items
+                    affichageBitmap(g, _labyPlayers);   // Players
 
-                affichageFog(g);
+                    affichageFog(g);
+                }
+                Invalidate();
             }
-            Invalidate();
         }
 
         void affichageFond(Graphics g)
@@ -253,14 +264,17 @@ namespace Laby_Affichage
             return true;
         }
 
-        public void moveToTile(int x, int y)
+        public void moveToTile(Point p)
         {
+            int x = p.X;
+            int y = p.Y;
             int tailleMax = _maze.GetUpperBound(0) * _tailleTiles;
             if (((x + y) >= 0) & ((x + y) < tailleMax * 2))
             {
                 _offsetX = (x * _tailleTiles) - _centerX + (_tailleTiles / 2);
                 _offsetY = (y * _tailleTiles) - _centerY + (_tailleTiles / 2);
             }
+            check_if_XnY_changes();
             RePaint();
         }
 
@@ -271,9 +285,9 @@ namespace Laby_Affichage
 
         void Moving(int x, int y) // Ca Marche !
         {
-            int left = -_centerX + (_tailleTiles/2);
+            int left = -_centerX + (_tailleTiles / 2);
             int up = -_centerY + (_tailleTiles / 2);
-            int right = ((_maze.GetUpperBound(0)-1) * _tailleTiles) - _centerX - (_tailleTiles / 2);
+            int right = ((_maze.GetUpperBound(0) - 1) * _tailleTiles) - _centerX - (_tailleTiles / 2);
             int down = ((_maze.GetUpperBound(0) - 1) * _tailleTiles) - _centerY - (_tailleTiles / 2);
             if (x < left) _offsetX = left;
             else
