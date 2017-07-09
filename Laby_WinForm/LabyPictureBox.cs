@@ -2,9 +2,10 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using Laby_Interfaces;
+//using Laby_Interfaces;
 
-namespace Laby_Affichage
+//namespace Laby_Affichage
+namespace Labyrinthe
 {
     class LabyPictureBox : PictureBox
     {
@@ -49,8 +50,8 @@ namespace Laby_Affichage
             _height = cmbTuillesHeight * _tailleTiles;
             _centerX = _width / 2;
             _centerY = _height / 2;
-            _X = ((_centerX + _offsetX - (_tailleTiles / 2)) / _tailleTiles);
-            _Y = ((_centerY + _offsetY - (_tailleTiles / 2)) / _tailleTiles);
+            _X = ((_centerX + _offsetX) / _tailleTiles);
+            _Y = ((_centerY + _offsetY) / _tailleTiles);
 
             Size = new Size(_width, _height);
 
@@ -90,33 +91,69 @@ namespace Laby_Affichage
             RePaint();
         }
 
-        public void addItem(Point p, string nom)
+        public void addItem(Point p, Loot nom)
         {
-            if (!_items.ContainsKey(p)) _items.Add(p, nom);
-            createBitMapItems();
-            RePaint();
+            if (!_items.ContainsKey(p))
+            {
+                _items.Add(p, nom);
+                //createBitMapItems();
+                using (Graphics g = Graphics.FromImage(_labyItems))
+                {
+                    string n = "";
+                    switch (nom)
+                    {
+                        case Loot.CRATE: n = "crate"; break;
+                        case Loot.COIN: n = "coin"; break;
+                    }
+                    p.X = p.X * _tailleTiles;
+                    p.Y = p.Y * _tailleTiles;
+                    Bitmap tmp = new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image);
+                    g.DrawImage(tmp, p);
+                }
+                RePaint();
+            }
         }
 
-        public void removeItem(Point p)
+        delegate void PointCallback(Point p);
+        public void ItemRemove(Point p)
         {
-            _items.Remove(p);
-            createBitMapItems();
-            RePaint();
+            if (InvokeRequired) Invoke(new PointCallback(ItemRemove), new object[] { p });
+            else
+            {
+                _items.Remove(p);
+                using (Graphics g = Graphics.FromImage(_labyItems))
+                {
+                    g.Clip = new Region(new Rectangle(p.X * _tailleTiles, p.Y * _tailleTiles, _tailleTiles, _tailleTiles));
+                    g.Clear(Color.Transparent);
+
+
+                    using (System.Media.SoundPlayer audio = new System.Media.SoundPlayer(Properties.Resources.snd_coin))
+                    {
+                        audio.Play();
+                    }
+
+                }
+                RePaint();
+            }
         }
 
         private void createBitMapItems() // générer l'image items
         {
             Point p;
-            string n;
+            string n = "";
             using (Graphics g = Graphics.FromImage(_labyItems))
             {
                 g.Clear(Color.Transparent);
                 foreach (DictionaryEntry entry in _items)
                 {
                     p = (Point)entry.Key;
-                    n = entry.Value.ToString();
-                    p.X = (p.X - 1) * _tailleTiles;
-                    p.Y = (p.Y - 1) * _tailleTiles;
+                    switch ((Loot)entry.Value)
+                    {
+                        case Loot.CRATE: n = "crate"; break;
+                        case Loot.COIN: n = "coin"; break;
+                    }
+                    p.X = p.X * _tailleTiles;
+                    p.Y = p.Y * _tailleTiles;
                     Bitmap tmp = new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image);
                     g.DrawImage(tmp, p);
                 }
@@ -127,25 +164,46 @@ namespace Laby_Affichage
         {
             return _players.ContainsKey(ip);
         }
+
+        delegate void StringPointCallback(string ip, Point p);
         public void addPlayer(string ip, Point p)
         {
-            if (!_players.ContainsKey(ip)) _players.Add(ip, p);
-            createBitMapPlayers();
-            RePaint();
+            if (!_players.ContainsKey(ip))
+            {
+                if (InvokeRequired) Invoke(new StringPointCallback(addPlayer), new object[] { ip, p });
+                else
+                {
+                    _players.Add(ip, p);
+                    using (Graphics g = Graphics.FromImage(_labyPlayers))
+                    {
+                        p.X = p.X * _tailleTiles;
+                        p.Y = p.Y * _tailleTiles;
+                        Bitmap tmp = new Bitmap(Properties.Resources.Combattante_Rose_Bas_1);
+                        g.DrawImage(tmp, p);
+                    }
+                    RePaint();
+                }
+            }
         }
+        public void movePlayer(string ip, Point p)
+        {
+            if (InvokeRequired) Invoke(new StringPointCallback(movePlayer), new object[] { ip, p });
+            else
+            {
+                _players.Remove(ip);
+                _players.Add(ip, p);
+                createBitMapPlayers();
+                RePaint();
+            }
+        }
+
         public void removePlayer(string ip)
         {
             _players.Remove(ip);
             createBitMapPlayers();
             RePaint();
         }
-        public void movePlayer(string ip, Point p)
-        {
-            _players.Remove(ip);
-            _players.Add(ip, p);
-            createBitMapPlayers();
-            RePaint();
-        }
+
 
         private void createBitMapPlayers() // générer l'image players
         {
@@ -293,27 +351,35 @@ namespace Laby_Affichage
             else
             {
                 if (x > right) _offsetX = right;
-                else _offsetX = x;
+                else
+                {
+                    if (_maze[((_centerX + x) / _tailleTiles), ((_centerY + _offsetY) / _tailleTiles)] == 0)
+                        _offsetX = x;
+                }
             }
             if (y < up) _offsetY = up;
             else
             {
                 if (y > down) _offsetY = down;
-                else _offsetY = y;
+                else
+                {
+                    bool center = false, bottom = false;
+                    if (_maze[((_centerX + _offsetX) / _tailleTiles), ((_centerY + y) / _tailleTiles)] == 0)
+                        center = true;
+                    if (_maze[((_centerX + _offsetX) / _tailleTiles), ((_centerY + y + (_tailleTiles / 2)) / _tailleTiles)] == 0)
+                        bottom = true;
+
+                    if (center & bottom) _offsetY = y;
+                }
             }
             check_if_XnY_changes();
             RePaint();
         }
 
-        public void Mooving(Keys k) // Test....
-        {
-            RePaint();
-        }
-
         void check_if_XnY_changes() // Test....
         {
-            int x = ((_centerX + _offsetX - (_tailleTiles / 2)) / _tailleTiles);
-            int y = ((_centerY + _offsetY - (_tailleTiles / 2)) / _tailleTiles);
+            int x = ((_centerX + _offsetX) / _tailleTiles);
+            int y = ((_centerY + _offsetY) / _tailleTiles);
             if ((x + y) != (_X + _Y))
             {
                 _X = x;

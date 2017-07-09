@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
-using Laby_Interfaces;
+//using Laby_Interfaces;
 
 
-namespace Laby_Affichage
+//namespace Laby_Affichage
+namespace Labyrinthe
 {
     public class LabyPanel : Panel, IAffichage
     {
@@ -145,29 +146,18 @@ namespace Laby_Affichage
         {
             _labyrinthe.ItemsInit(ht);
         }
-        public void ItemAdd(Point p, string nom)
+        public void ItemAdd(Point p, Loot nom)
         {
             _labyrinthe.addItem(p, nom);
         }
         public void ItemRemove(Point p)
         {
-            _labyrinthe.removeItem(p);
+            _labyrinthe.ItemRemove(p);
         }
 
         public void Warfog(int lvl)
         {
             if (lvl >= 0 & lvl <= 4) _labyrinthe.Warfog(lvl);
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }

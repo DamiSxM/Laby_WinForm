@@ -3,7 +3,8 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
 
-namespace Laby_Affichage
+//namespace Laby_Affichage
+namespace Labyrinthe
 {
     class PlayerPictureBox : PictureBox
     {

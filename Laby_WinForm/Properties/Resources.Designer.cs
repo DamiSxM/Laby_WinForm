@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Laby_Affichage.Properties {
+namespace Labyrinthe.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Laby_Affichage.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Laby_Affichage.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Labyrinthe.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -166,6 +166,16 @@ namespace Laby_Affichage.Properties {
         internal static System.Drawing.Bitmap cielEtoiles {
             get {
                 object obj = ResourceManager.GetObject("cielEtoiles", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap coin {
+            get {
+                object obj = ResourceManager.GetObject("coin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -326,6 +336,16 @@ namespace Laby_Affichage.Properties {
         internal static System.Drawing.Bitmap Combattante_Rose_Haut_3 {
             get {
                 object obj = ResourceManager.GetObject("Combattante_Rose_Haut_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap crate {
+            get {
+                object obj = ResourceManager.GetObject("crate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1177,6 +1197,24 @@ namespace Laby_Affichage.Properties {
             get {
                 object obj = ResourceManager.GetObject("PorteMagiqueBleu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream snd_coin {
+            get {
+                return ResourceManager.GetStream("snd_coin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream snd_fight {
+            get {
+                return ResourceManager.GetStream("snd_fight", resourceCulture);
             }
         }
         
