@@ -14,6 +14,8 @@ namespace Labyrinthe
         int _tailleGrille, _tailleCellule, _offsetX = 0, _offsetY = 0;
         Bitmap _itemsBitmap;
 
+        Hashtable _items;
+
         public ItemsPictureBox(int tailleGrille, int tailleCellule, int width, int height) : base()
         {
             _itemsBitmap = new Bitmap(tailleGrille * tailleCellule, tailleGrille * tailleCellule);
