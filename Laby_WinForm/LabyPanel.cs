@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 //using Laby_Interfaces;
@@ -11,6 +12,9 @@ namespace Labyrinthe
     public class LabyPanel : Panel, IAffichage
     {
         LabyPictureBox _labyrinthe;
+        //ItemsPictureBox _items;
+        //PictureBox _players;
+        //PictureBox _warfog;
         PlayerPictureBox _player;
         Label _debug;
 
@@ -26,6 +30,11 @@ namespace Labyrinthe
             _labyrinthe.Location = new Point(0, 0);
             Controls.Add(_labyrinthe);
 
+            /*_items = new ItemsPictureBox(maze.GetLength(0), tileSize, displayTileSize, displayTileSize);
+            _items.Location = new Point(0, 0);
+            Controls.Add(_items);
+            _items.Parent = _labyrinthe;*/
+            
             _player = new PlayerPictureBox();
             _player.setLocation(Size);
             Controls.Add(_player);
@@ -95,30 +104,36 @@ namespace Labyrinthe
                     _player.GoDown();
                     break;
             }
+            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoMoveLeft()
         {
             _labyrinthe.GoLeft();
             _player.GoLeft();
+            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoMoveUp()
         {
             _labyrinthe.GoUp();
             _player.GoUp();
+            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoMoveRight()
         {
             _labyrinthe.GoRight();
             _player.GoRight();
+            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoMoveDown()
         {
             _labyrinthe.GoDown();
             _player.GoDown();
+            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoTeleport(Point p)
         {
             _labyrinthe.moveToTile(p);
+            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoStop()
         {
@@ -145,14 +160,25 @@ namespace Labyrinthe
         public void ItemsInit(Hashtable ht)
         {
             _labyrinthe.ItemsInit(ht);
+
+            //_items.Init(ht);
+
         }
         public void ItemAdd(Point p, Loot nom)
         {
             _labyrinthe.addItem(p, nom);
+            /*string n = "";
+            switch (nom)
+            {
+                case Loot.CRATE: n = "crate"; break;
+                case Loot.COIN: n = "coin"; break;
+            }
+            _items.Add(new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image), p.X, p.Y);*/
         }
         public void ItemRemove(Point p)
         {
             _labyrinthe.ItemRemove(p);
+            //_items.Remove(p.X, p.Y);
         }
 
         public void Warfog(int lvl)
