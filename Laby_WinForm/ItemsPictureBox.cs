@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Labyrinthe
@@ -66,7 +61,6 @@ namespace Labyrinthe
             _offsetY += distance;
             Invalidate();
         }
-
         public new void Move(int x, int y)
         {
             _offsetX = x * _tailleCellule - Width / 2 + _tailleCellule / 2;
@@ -114,8 +108,6 @@ namespace Labyrinthe
             }
             base.Invalidate();
         }
-
-
         public new void Invalidate(Rectangle r)
         {
             int droite, bas;
