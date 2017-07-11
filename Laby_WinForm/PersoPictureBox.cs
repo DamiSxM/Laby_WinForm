@@ -6,14 +6,14 @@ using System.Threading;
 //namespace Laby_Affichage
 namespace Labyrinthe
 {
-    class PlayerPictureBox : PictureBox
+    class PersoPictureBox : PictureBox
     {
         //string _perso;
         string _direction = "Bas";
         Thread th;
         bool stopThread = false;
 
-        public PlayerPictureBox(/*string perso*/)
+        public PersoPictureBox(/*string perso*/)
         {
             //_perso = perso;
             Size = new Size(50, 50);

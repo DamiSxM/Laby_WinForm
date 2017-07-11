@@ -54,7 +54,7 @@
     <Compile Include="LabyPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PlayerPictureBox.cs">
+    <Compile Include="PersoPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

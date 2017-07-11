@@ -12,10 +12,10 @@ namespace Labyrinthe
     public class LabyPanel : Panel, IAffichage
     {
         LabyPictureBox _labyrinthe;
-        //ItemsPictureBox _items;
+        ItemsPictureBox _items;
         //PictureBox _players;
         //PictureBox _warfog;
-        PlayerPictureBox _player;
+        PersoPictureBox _perso;
         Label _debug;
 
         public LabyPanel(int[,] maze)
@@ -30,15 +30,15 @@ namespace Labyrinthe
             _labyrinthe.Location = new Point(0, 0);
             Controls.Add(_labyrinthe);
 
-            /*_items = new ItemsPictureBox(maze.GetLength(0), tileSize, displayTileSize, displayTileSize);
+            _items = new ItemsPictureBox(maze.GetLength(0), tileSize, displayTileSize, displayTileSize);
             _items.Location = new Point(0, 0);
             Controls.Add(_items);
-            _items.Parent = _labyrinthe;*/
+            _items.Parent = _labyrinthe;
             
-            _player = new PlayerPictureBox();
-            _player.setLocation(Size);
-            Controls.Add(_player);
-            _player.Parent = _labyrinthe;
+            _perso = new PersoPictureBox();
+            _perso.setLocation(Size);
+            Controls.Add(_perso);
+            _perso.Parent = _items;
 
             _debug = new Label();
             _debug.ForeColor = Color.Red;
@@ -47,7 +47,7 @@ namespace Labyrinthe
             _debug.Text = "Debug";
             _debug.Location = new Point(10, 10);
             Controls.Add(_debug);
-            _debug.Parent = _labyrinthe;
+            _debug.Parent = _items;
         }
 
         public event Position PositionChanged;
@@ -83,61 +83,65 @@ namespace Labyrinthe
             return new Point(_labyrinthe.X, _labyrinthe.Y);
         }
 
-        public void PersoMove(Direction d)
+        public void PersoMove(Direction d, int vitesse)
         {
             switch (d)
             {
                 case Direction.LEFT:
                     _labyrinthe.GoLeft();
-                    _player.GoLeft();
+                    _items.MoveLeft(vitesse);
+                    _perso.GoLeft();
                     break;
                 case Direction.UP:
                     _labyrinthe.GoUp();
-                    _player.GoUp();
+                    _items.MoveUp(vitesse);
+                    _perso.GoUp();
                     break;
                 case Direction.RIGHT:
                     _labyrinthe.GoRight();
-                    _player.GoRight();
+                    _items.MoveRight(vitesse);
+                    _perso.GoRight();
                     break;
                 case Direction.DOWN:
                     _labyrinthe.GoDown();
-                    _player.GoDown();
+                    _items.MoveDown(vitesse);
+                    _perso.GoDown();
                     break;
             }
             //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
-        public void PersoMoveLeft()
+        /*public void PersoMoveLeft()
         {
             _labyrinthe.GoLeft();
-            _player.GoLeft();
-            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
+            _perso.GoLeft();
+            _items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoMoveUp()
         {
             _labyrinthe.GoUp();
-            _player.GoUp();
-            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
+            _perso.GoUp();
+            _items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoMoveRight()
         {
             _labyrinthe.GoRight();
-            _player.GoRight();
-            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
+            _perso.GoRight();
+            _items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
         public void PersoMoveDown()
         {
             _labyrinthe.GoDown();
-            _player.GoDown();
-            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
-        }
+            _perso.GoDown();
+            _items.Move(PersoGetPosition().X, PersoGetPosition().Y);
+        }*/
         public void PersoTeleport(Point p)
         {
             _labyrinthe.moveToTile(p);
-            //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
+            _items.Move(p.X, p.Y);
         }
         public void PersoStop()
         {
-            _player.Stop();
+            _perso.Stop();
         }
 
         public bool PlayerExists(string ip)
@@ -161,24 +165,24 @@ namespace Labyrinthe
         {
             _labyrinthe.ItemsInit(ht);
 
-            //_items.Init(ht);
+            _items.Init(ht);
 
         }
         public void ItemAdd(Point p, Loot nom)
         {
             _labyrinthe.addItem(p, nom);
-            /*string n = "";
+            string n = "";
             switch (nom)
             {
-                case Loot.CRATE: n = "crate"; break;
-                case Loot.COIN: n = "coin"; break;
+                case Loot.CRATE: n = "escalierPierre"; break;
+                case Loot.COIN: n = "escalierPierre"; break;
             }
-            _items.Add(new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image), p.X, p.Y);*/
+            _items.Add(new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image), p.X, p.Y);
         }
         public void ItemRemove(Point p)
         {
             _labyrinthe.ItemRemove(p);
-            //_items.Remove(p.X, p.Y);
+            _items.Remove(p.X, p.Y);
         }
 
         public void Warfog(int lvl)
