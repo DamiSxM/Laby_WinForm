@@ -32,8 +32,8 @@ namespace Labyrinthe
                 p = (Point)entry.Key;
                 switch ((Loot)entry.Value)
                 {
-                    case Loot.CRATE: n = "escalierPierre"; break;
-                    case Loot.COIN: n = "escalierPierre"; break;
+                    case Loot.CRATE: n = "crate"; break;
+                    case Loot.COIN: n = "coin"; break;
                 }
                 Add(new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image), p.X, p.Y);
             }
@@ -75,38 +75,46 @@ namespace Labyrinthe
             {
                 g.DrawImage(i, r);
             }
-            if(r.IntersectsWith(new Rectangle(0, 0, Width, Height)))
-                Invalidate(r);
+            Invalidate();
+            /*if(r.IntersectsWith(new Rectangle(0, 0, Width, Height)))
+                Invalidate(r);*/
         }
         public void Remove(int x, int y)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("REMOVE !!!!!!!!!!!!!!!!!!!!"));
             Rectangle r = new Rectangle(x * _tailleCellule, y * _tailleCellule, _tailleCellule, _tailleCellule);
             using (Graphics g = Graphics.FromImage(_itemsBitmap))
             {
                 g.Clip = new Region(r);
                 g.Clear(Color.Transparent);
             }
-            if (r.IntersectsWith(new Rectangle(0, 0, Width, Height)))
-                Invalidate(r);
+            Invalidate();
+            /*if (r.IntersectsWith(new Rectangle(0, 0, Width, Height)))
+                Invalidate(r);*/
         }
 
+
+        delegate void InvalidateCallback();
         public new void Invalidate()
         {
-            //System.Diagnostics.Debug.WriteLine(string.Format("Invalidate !!!!!!!!!!!!!!!!!!!!"));
-            int droite, bas;
-            if (_offsetX + Width < Width) droite = Width;
-            else droite = _offsetX + Width;
-            if (_offsetY + Height < Height) bas = Height;
-            else bas = _offsetY + Height;
-            
-            Rectangle srcRect = new Rectangle(_offsetX, _offsetY, droite, bas);
-
-            using (Graphics g = Graphics.FromImage(Image))
+            if (InvokeRequired) Invoke(new InvalidateCallback(Invalidate));
+            else
             {
-                g.Clear(Color.Transparent);
-                g.DrawImage(_itemsBitmap, 0, 0, srcRect, GraphicsUnit.Pixel);
+                int droite, bas;
+                if (_offsetX + Width < Width) droite = Width;
+                else droite = _offsetX + Width;
+                if (_offsetY + Height < Height) bas = Height;
+                else bas = _offsetY + Height;
+
+                Rectangle srcRect = new Rectangle(_offsetX, _offsetY, droite, bas);
+
+                using (Graphics g = Graphics.FromImage(Image))
+                {
+                    g.Clear(Color.Transparent);
+                    g.DrawImage(_itemsBitmap, 0, 0, srcRect, GraphicsUnit.Pixel);
+                }
+                base.Invalidate();
             }
-            base.Invalidate();
         }
         public new void Invalidate(Rectangle r)
         {
