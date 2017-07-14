@@ -4,10 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-//using Laby_Interfaces;
 
-
-//namespace Laby_Affichage
 namespace Labyrinthe
 {
     public class LabyPanel : Panel, IAffichage
@@ -21,30 +18,32 @@ namespace Labyrinthe
         PersoPictureBox _perso;
         Label _debug;
 
-        public LabyPanel(Maze maze /*int[,] maze*/)
+        int _cellSize;
+
+        public LabyPanel(Maze maze)
         {
             _maze = maze;
-            int tileSize = 50;
+            _cellSize = 50;
             int displayTileSize = 9;
 
-            Size = new Size(displayTileSize * tileSize, displayTileSize * tileSize);
+            Size = new Size(displayTileSize * _cellSize, displayTileSize * _cellSize);
 
-            _labyrinthe = new LabyPictureBox(_maze.Labyrinthe, tileSize, displayTileSize, displayTileSize);
+            _labyrinthe = new LabyPictureBox(_maze.Labyrinthe, _cellSize, displayTileSize, displayTileSize);
             _labyrinthe.PositionChanged += Labyrinthe_PositionChanged; ;
             _labyrinthe.Location = new Point(0, 0);
             Controls.Add(_labyrinthe);
 
-            _items = new ItemsPictureBox(_maze.Labyrinthe.GetLength(0), tileSize, displayTileSize, displayTileSize);
+            _items = new ItemsPictureBox(_maze.Labyrinthe.GetLength(0), _cellSize, displayTileSize, displayTileSize);
             _items.Location = new Point(0, 0);
             Controls.Add(_items);
             _items.Parent = _labyrinthe;
 
-            _players = new PlayersPictureBox(_maze.Labyrinthe.GetLength(0), tileSize, displayTileSize, displayTileSize);
+            _players = new PlayersPictureBox(_maze.Labyrinthe.GetLength(0), _cellSize, displayTileSize, displayTileSize);
             _players.Location = new Point(0, 0);
             Controls.Add(_players);
             _players.Parent = _items;
 
-            _warfog = new WarfogPictureBox(_maze.Labyrinthe.GetLength(0), tileSize, displayTileSize, displayTileSize);
+            _warfog = new WarfogPictureBox(_maze.Labyrinthe.GetLength(0), _cellSize, displayTileSize, displayTileSize);
             _warfog.Location = new Point(0, 0);
             Controls.Add(_warfog);
             _warfog.Parent = _players;
@@ -73,7 +72,11 @@ namespace Labyrinthe
 
         public void LabyUpdate()
         {
-            _labyrinthe.generateLaby(_maze.Labyrinthe);
+            _labyrinthe.Generate(_maze.Labyrinthe);
+        }
+        public int GetCellSize()
+        {
+            return _cellSize;
         }
 
         delegate void DebugCallback(string text);
@@ -96,7 +99,31 @@ namespace Labyrinthe
         {
             return new Point(_labyrinthe.X, _labyrinthe.Y);
         }
-
+        public Point PersoGetPositionPixel()
+        {
+            return _labyrinthe.GetPositionPixel();
+        }
+        public void PersoMove(Direction d, Point p)
+        {
+            switch (d)
+            {
+                case Direction.LEFT:
+                    _perso.GoLeft();
+                    break;
+                case Direction.UP:
+                    _perso.GoUp();
+                    break;
+                case Direction.RIGHT:
+                    _perso.GoRight();
+                    break;
+                case Direction.DOWN:
+                    _perso.GoDown();
+                    break;
+            }
+            _labyrinthe.MoveCenterPixel(p);
+            _items.MoveCenterPixel(p);
+            _players.MoveCenterPixel(p);
+        }
         public void PersoMove(Direction d, int vitesse)
         {
             switch (d)
@@ -128,11 +155,10 @@ namespace Labyrinthe
             }
             //_items.Move(PersoGetPosition().X, PersoGetPosition().Y);
         }
-
         public void PersoTeleport(Point p)
         {
-            _labyrinthe.moveToTile(p);
-            _items.Move(p.X, p.Y);
+            _labyrinthe.MoveCenter(p);
+            _items.MoveCenter(p);
             _players.MoveCenter(p);
         }
         public void PersoStop()
@@ -142,34 +168,27 @@ namespace Labyrinthe
 
         public bool PlayerExists(string ip)
         {
-            //return _labyrinthe.containsPlayer(ip);
             return _players.ContainsPlayer(ip);
         }
         public void PlayerAdd(string ip, Point p)
         {
-            //_labyrinthe.addPlayer(ip, p);
             _players.Add(ip, p);
         }
         public void PlayerMove(string ip, Point p)
         {
-            //_labyrinthe.movePlayer(ip, p);
             _players.Move(ip, p);
         }
         public void PlayerRemove(string ip)
         {
-            //_labyrinthe.removePlayer(ip);
             _players.Remove(ip);
         }
 
         public void ItemsInit(Hashtable ht)
         {
-            //_labyrinthe.ItemsInit(ht);
             _items.Init(ht);
-
         }
         public void ItemAdd(Point p, Loot nom)
         {
-            //_labyrinthe.addItem(p, nom);
             string n = "";
             switch (nom)
             {
@@ -180,7 +199,6 @@ namespace Labyrinthe
         }
         public void ItemRemove(Point p)
         {
-            //_labyrinthe.ItemRemove(p);
             _items.Remove(p.X, p.Y);
 
             using (System.Media.SoundPlayer audio = new System.Media.SoundPlayer(Properties.Resources.snd_coin))

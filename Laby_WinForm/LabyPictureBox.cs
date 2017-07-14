@@ -2,9 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-//using Laby_Interfaces;
 
-//namespace Laby_Affichage
 namespace Labyrinthe
 {
     class LabyPictureBox : PictureBox
@@ -14,11 +12,6 @@ namespace Labyrinthe
         int _tailleMaze;
 
         Bitmap _labyBase;
-        //Bitmap _labyItems;
-        //Bitmap _labyPlayers;
-
-        Hashtable _items = new Hashtable();
-        //Hashtable _players = new Hashtable();
 
         int _width;
         int _height;
@@ -35,14 +28,14 @@ namespace Labyrinthe
         void OnPositionChanged(int x, int y) { if (PositionChanged != null) PositionChanged(x, y); }
 
         public int Velocity { get { return _velocity; } set { _velocity = value; } }
-        public int X { get { return _X; } set { moveToTile(new Point(value, _Y)); } }
-        public int Y { get { return _Y; } set { moveToTile(new Point(_X, value)); } }
+        public int X { get { return _X; } set { MoveCenter(new Point(value, _Y)); } }
+        public int Y { get { return _Y; } set { MoveCenter(new Point(_X, value)); } }
 
         public LabyPictureBox(int[,] maze, int tailleTiles, int cmbTuillesWidth, int cmbTuillesHeight) : base()
         {
             DoubleBuffered = true;
             _maze = maze;
-            _tailleMaze = maze.GetUpperBound(0);
+            _tailleMaze = maze.GetLength(0);
             _tailleTiles = tailleTiles;
 
             _width = cmbTuillesWidth * _tailleTiles;
@@ -56,22 +49,18 @@ namespace Labyrinthe
 
             Image = new Bitmap(cmbTuillesWidth * _tailleTiles, cmbTuillesHeight * _tailleTiles);
             _labyBase = new Bitmap(_tailleMaze * _tailleTiles, _tailleMaze * _tailleTiles);
-            //_labyItems = new Bitmap(_tailleMaze * _tailleTiles, _tailleMaze * _tailleTiles);
-            //_labyPlayers = new Bitmap(_tailleMaze * _tailleTiles, _tailleMaze * _tailleTiles);
-            
 
-            generateLaby(_maze);
+            Generate(_maze);
         }
 
-        public void generateLaby(int[,] maze)
+        public void Generate(int[,] maze)
         {
             _maze = maze;
-            System.Diagnostics.Debug.WriteLine(string.Format("generateLaby DBT"));
             using (Graphics g = Graphics.FromImage(_labyBase))
             {
-                for (int x = 0; x < _tailleMaze - 1; x++)
+                for (int x = 0; x < maze.GetLength(0); x++)
                 {
-                    for (int y = 0; y < _tailleMaze - 1; y++)
+                    for (int y = 0; y < maze.GetLength(0); y++)
                     {
                         Bitmap tmp = new Bitmap(_tailleTiles, _tailleTiles);
                         if (_maze[x, y] == 0) tmp = new Bitmap(Properties.Resources.solSable);
@@ -81,143 +70,11 @@ namespace Labyrinthe
                 }
             }
             RePaint();
-            System.Diagnostics.Debug.WriteLine(string.Format("generateLaby FIN"));
         }
 
-
-        /*public void ItemsInit(Hashtable ht)
-        {
-            _items = ht;
-            createBitMapItems();
-            RePaint();
-        }*/
-
-        /*public void addItem(Point p, Loot nom)
-        {
-            if (!_items.ContainsKey(p))
-            {
-                _items.Add(p, nom);
-                //createBitMapItems();
-                using (Graphics g = Graphics.FromImage(_labyItems))
-                {
-                    string n = "";
-                    switch (nom)
-                    {
-                        case Loot.CRATE: n = "crate"; break;
-                        case Loot.COIN: n = "coin"; break;
-                    }
-                    p.X = p.X * _tailleTiles;
-                    p.Y = p.Y * _tailleTiles;
-                    Bitmap tmp = new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image);
-                    g.DrawImage(tmp, p);
-                }
-                RePaint();
-            }
-        }*/
-
         delegate void PointCallback(Point p);
-        /*public void ItemRemove(Point p)
-        {
-            if (InvokeRequired) Invoke(new PointCallback(ItemRemove), new object[] { p });
-            else
-            {
-                _items.Remove(p);
-                using (Graphics g = Graphics.FromImage(_labyItems))
-                {
-                    g.Clip = new Region(new Rectangle(p.X * _tailleTiles, p.Y * _tailleTiles, _tailleTiles, _tailleTiles));
-                    g.Clear(Color.Transparent);
-
-
-
-                }
-                RePaint();
-            }
-        }*/
-
-        /*private void createBitMapItems() // générer l'image items
-        {
-            Point p;
-            string n = "";
-            using (Graphics g = Graphics.FromImage(_labyItems))
-            {
-                g.Clear(Color.Transparent);
-                foreach (DictionaryEntry entry in _items)
-                {
-                    p = (Point)entry.Key;
-                    switch ((Loot)entry.Value)
-                    {
-                        case Loot.CRATE: n = "crate"; break;
-                        case Loot.COIN: n = "coin"; break;
-                    }
-                    p.X = p.X * _tailleTiles;
-                    p.Y = p.Y * _tailleTiles;
-                    Bitmap tmp = new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image);
-                    g.DrawImage(tmp, p);
-                }
-            }
-        }*/
-
-        /*public bool containsPlayer(string ip)
-        {
-            return _players.ContainsKey(ip);
-        }*/
 
         delegate void StringPointCallback(string ip, Point p);
-        /*public void addPlayer(string ip, Point p)
-        {
-            if (!_players.ContainsKey(ip))
-            {
-                if (InvokeRequired) Invoke(new StringPointCallback(addPlayer), new object[] { ip, p });
-                else
-                {
-                    _players.Add(ip, p);
-                    using (Graphics g = Graphics.FromImage(_labyPlayers))
-                    {
-                        p.X = p.X * _tailleTiles;
-                        p.Y = p.Y * _tailleTiles;
-                        Bitmap tmp = new Bitmap(Properties.Resources.Combattante_Rose_Bas_1);
-                        g.DrawImage(tmp, p);
-                    }
-                    RePaint();
-                }
-            }
-        }*/
-        /*public void movePlayer(string ip, Point p)
-        {
-            if (InvokeRequired) Invoke(new StringPointCallback(movePlayer), new object[] { ip, p });
-            else
-            {
-                _players.Remove(ip);
-                _players.Add(ip, p);
-                //createBitMapPlayers();
-                RePaint();
-            }
-        }*/
-
-        /*public void removePlayer(string ip)
-        {
-            _players.Remove(ip);
-            //createBitMapPlayers();
-            RePaint();
-        }*/
-
-
-        /*private void createBitMapPlayers() // générer l'image players
-        {
-            Point p;
-            using (Graphics g = Graphics.FromImage(_labyPlayers))
-            {
-                g.Clear(Color.Transparent);
-                foreach (DictionaryEntry entry in _players)
-                {
-                    p = (Point)entry.Value;
-                    p.X = p.X * _tailleTiles;
-                    p.Y = p.Y * _tailleTiles;
-                    Bitmap tmp = new Bitmap(Properties.Resources.Combattante_Rose_Bas_1);
-                    g.DrawImage(tmp, p);
-                }
-            }
-        }*/
 
         delegate void RePaintCallback();
         public void RePaint()
@@ -228,10 +85,7 @@ namespace Labyrinthe
                 using (Graphics g = Graphics.FromImage(Image))
                 {
                     affichageFond(g);
-
                     affichageBitmap(g, _labyBase);      // Laby
-                    //affichageBitmap(g, _labyItems);     // Items
-                    //affichageBitmap(g, _labyPlayers);   // Players
                 }
                 Invalidate();
             }
@@ -249,13 +103,11 @@ namespace Labyrinthe
             if (_offsetX + _width < _width) droite = _width;
             else droite = _offsetX + _width;
 
-            Rectangle destRect = new Rectangle(new Point(0, 0), Size);
             Rectangle srcRect = new Rectangle(_offsetX, _offsetY, droite, bas);
-
             g.DrawImage(b, 0, 0, srcRect, GraphicsUnit.Pixel);
         }
 
-        public void moveToTile(Point p)
+        public void MoveCenter(Point p)
         {
             int x = p.X;
             int y = p.Y;
@@ -265,6 +117,15 @@ namespace Labyrinthe
                 _offsetX = (x * _tailleTiles) - _centerX + (_tailleTiles / 2);
                 _offsetY = (y * _tailleTiles) - _centerY + (_tailleTiles / 2);
             }
+            check_if_XnY_changes();
+            RePaint();
+        }
+        public void MoveCenterPixel(Point p)
+        {
+            /*_offsetX = p.X - _centerX + (_tailleTiles / 2);
+            _offsetY = p.Y - _centerY + (_tailleTiles / 2);*/
+            _offsetX = p.X - _centerX;
+            _offsetY = p.Y - _centerY;
             check_if_XnY_changes();
             RePaint();
         }
@@ -310,6 +171,11 @@ namespace Labyrinthe
             }*/
             check_if_XnY_changes();
             RePaint();
+        }
+
+        public Point GetPositionPixel()
+        {
+            return new Point(_centerX + _offsetX, _centerY + _offsetY);
         }
 
         void check_if_XnY_changes() // Test....

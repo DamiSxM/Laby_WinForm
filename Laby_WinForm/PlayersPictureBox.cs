@@ -46,26 +46,33 @@ namespace Labyrinthe
             _offsetY += distance;
             Invalidate();
         }
-        public new void MoveCenter(Point p)
+        public void MoveCenter(Point p)
         {
             _offsetX = p.X * _tailleCellule - Width / 2 + _tailleCellule / 2;
             _offsetY = p.Y * _tailleCellule - Height / 2 + _tailleCellule / 2;
             Invalidate();
         }
+        public void MoveCenterPixel(Point p)
+        {
+            _offsetX = p.X - Width / 2;
+            _offsetY = p.Y - Height / 2;
+            Invalidate();
+        }
         public new void Move(string ip, Point p)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("PlayersPictureBox.Move {0} x{1} y{2}", ip, p.X, p.Y));
             if (InvokeRequired) Invoke(new StringPointCallback(Move), new object[] { ip, p });
             else
             {
-                _players.Remove(ip);
-                _players.Add(ip, p);
+                Remove(ip);
+                Add(ip, p);
                 Invalidate();
             }
         }
 
         public void Add(string ip, Point p)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("AddAddAdd {0} {1} {2}", ip, p.X, p.Y));
+            System.Diagnostics.Debug.WriteLine(string.Format("PlayersPictureBox.Add {0} x{1} y{2}", ip, p.X, p.Y));
 
             if (!_players.ContainsKey(ip))
             {

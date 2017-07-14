@@ -25,7 +25,6 @@ namespace Labyrinthe
 
         public void Init(Hashtable ht)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("Init !!!!!!!!!!!!!!!!!!!!"));
             Point p; string n = "";
             foreach (DictionaryEntry entry in ht)
             {
@@ -40,7 +39,7 @@ namespace Labyrinthe
             Invalidate();
         }
 
-
+        
         public void MoveLeft(int distance)
         {
             _offsetX -= distance;
@@ -61,10 +60,16 @@ namespace Labyrinthe
             _offsetY += distance;
             Invalidate();
         }
-        public new void Move(int x, int y)
+        public void MoveCenter(Point p)
         {
-            _offsetX = x * _tailleCellule - Width / 2 + _tailleCellule / 2;
-            _offsetY = y * _tailleCellule - Height / 2 + _tailleCellule / 2;
+            _offsetX = p.X * _tailleCellule - Width / 2 + _tailleCellule / 2;
+            _offsetY = p.Y * _tailleCellule - Height / 2 + _tailleCellule / 2;
+            Invalidate();
+        }
+        public void MoveCenterPixel(Point p)
+        {
+            _offsetX = p.X - Width / 2;
+            _offsetY = p.Y - Height / 2;
             Invalidate();
         }
 
@@ -79,18 +84,22 @@ namespace Labyrinthe
             /*if(r.IntersectsWith(new Rectangle(0, 0, Width, Height)))
                 Invalidate(r);*/
         }
+        delegate void RemoveCallback(int x, int y);
         public void Remove(int x, int y)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("REMOVE !!!!!!!!!!!!!!!!!!!!"));
-            Rectangle r = new Rectangle(x * _tailleCellule, y * _tailleCellule, _tailleCellule, _tailleCellule);
-            using (Graphics g = Graphics.FromImage(_itemsBitmap))
+            if (InvokeRequired) Invoke(new RemoveCallback(Remove), new object[] { x, y });
+            else
             {
-                g.Clip = new Region(r);
-                g.Clear(Color.Transparent);
+                Rectangle r = new Rectangle(x * _tailleCellule, y * _tailleCellule, _tailleCellule, _tailleCellule);
+                using (Graphics g = Graphics.FromImage(_itemsBitmap))
+                {
+                    g.Clip = new Region(r);
+                    g.Clear(Color.Transparent);
+                }
+                Invalidate();
+                /*if (r.IntersectsWith(new Rectangle(0, 0, Width, Height)))
+                    Invalidate(r);*/
             }
-            Invalidate();
-            /*if (r.IntersectsWith(new Rectangle(0, 0, Width, Height)))
-                Invalidate(r);*/
         }
 
 
