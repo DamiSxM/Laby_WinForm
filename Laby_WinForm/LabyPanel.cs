@@ -19,6 +19,7 @@ namespace Labyrinthe
         Label _debug;
 
         int _cellSize;
+        int _warfogLvl = 0;
 
         public LabyPanel(Maze maze)
         {
@@ -205,9 +206,17 @@ namespace Labyrinthe
                 audio.Play();
         }
 
-        public void Warfog(int lvl)
+        public void WarfogSet(int lvl)
         {
-            if (lvl >= 0 & lvl <= 4) _warfog.ChangeLvl(lvl);
+            if (lvl >= 0 & lvl <= 4)
+            {
+                _warfogLvl = lvl;
+                _warfog.ChangeLvl(_warfogLvl);
+            }
+        }
+        public int WarfogGet()
+        {
+            return _warfogLvl;
         }
     }
 }
